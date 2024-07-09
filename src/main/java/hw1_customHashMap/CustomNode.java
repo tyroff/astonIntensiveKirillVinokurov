@@ -1,10 +1,8 @@
 package hw1_customHashMap;
-//src.main.java.hw1_customHashMap.CustomNode
 
-import java.util.Map;
 import java.util.Objects;
 
-public class CustomNode <K,V> implements Map.Entry {
+public class CustomNode <K,V> {
     private final K key;
     private V value;
 
@@ -21,16 +19,10 @@ public class CustomNode <K,V> implements Map.Entry {
         return value;
     }
 
-    @Override
-    public V setValue(Object value) {
-        return this.value = (V) value;
-    }
-
     public final String toString() {
-        return key + "=" + value;
+        return key + " = " + value;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -38,7 +30,6 @@ public class CustomNode <K,V> implements Map.Entry {
         return Objects.equals(key, that.key) && Objects.equals(value, that.value);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(key, value);
     }
