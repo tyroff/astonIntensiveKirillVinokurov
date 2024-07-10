@@ -25,7 +25,8 @@ public class CustomHashMap <K,V> {
         if (capacity > MAXIMUM_CAPACITY) {
             this.capacity = MAXIMUM_CAPACITY;
         }
-        table = new ArrayList<>(capacity);
+        this.capacity = capacity;
+        table = new ArrayList<>();
         createNullTable();
     }
 
@@ -83,7 +84,7 @@ public class CustomHashMap <K,V> {
         }
     }
 
-    public void remote(K key) {
+    public void remove(K key) {
         table.get(hash(key)).delete(key);
     }
 
