@@ -6,7 +6,7 @@ public class CustomNode <K,V> {
     private final K key;
     private V value;
 
-    CustomNode(K key, V value) {
+    public CustomNode(K key, V value) {
         this.key = key;
         this.value = value;
     }
