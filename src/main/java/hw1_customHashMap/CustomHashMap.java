@@ -1,5 +1,6 @@
 package hw1_customHashMap;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,11 +56,14 @@ public class CustomHashMap <K,V> {
 
 
     public V get(K key) {
+        if (key == null) {
+            return table.get(0).get(null);
+        }
         return table.get(hash(key)).get(key);
     }
 
     public void put(K key,V value) {
-        CustomBucket<K,V> bucket = new CustomBucket<>();
+        CustomBucket<K,V> bucket;
         if (key != null) {
             int index = hash(key);
             if (table.get(index) == null) {
@@ -71,15 +75,11 @@ public class CustomHashMap <K,V> {
             table.set(index, bucket);
         } else {
             if(table.get(0) == null) {
-                bucket.add(new CustomNode<>(null, value));
-            } else {
-                if (table.get(0) == null) {
-                    bucket = new CustomBucket<>();
-                } else {
-                    bucket = table.get(0);
-                }
+                bucket = new CustomBucket<>();
                 bucket.add(new CustomNode<>(null, value));
                 table.set(0, bucket);
+            } else if(table.get(0) != null) {
+                System.out.println("Key null already exists into CustomHashMap.");
             }
         }
     }
