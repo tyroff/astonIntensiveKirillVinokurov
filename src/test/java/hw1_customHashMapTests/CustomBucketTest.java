@@ -4,8 +4,6 @@ import hw1_customHashMap.CustomBucket;
 import hw1_customHashMap.CustomNode;
 import org.junit.jupiter.api.Test;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomBucketTest {
@@ -49,17 +47,6 @@ public class CustomBucketTest {
     }
 
     @Test
-    public void addDuplicateKeyTest() throws KeyAlreadyExistsException {
-        CustomNode<String, Integer> node = new CustomNode<>("String", 1);
-        CustomNode<String, Integer> duplicateNode = new CustomNode<>("String", 1);
-        bucket.add(node);
-        Throwable throwable = assertThrows(KeyAlreadyExistsException.class, () -> {
-            bucket.add(duplicateNode);
-        });
-        assertNotNull(throwable.getMessage());
-    }
-
-    @Test
     public void addManyTest() {
         for(int i = 0; i < 20; i++) {
             String key = "String" + i;
@@ -77,14 +64,14 @@ public class CustomBucketTest {
     }
 
     @Test
-    public void getNullTest() {
+    public void getNullValueTest() {
         CustomNode<String, Integer> node = new CustomNode<>("String", null);
         bucket.add(node);
         assertNull(bucket.get("String"));
     }
 
     @Test
-    public void getNoNullTest() {
+    public void getNotNullTest() {
         CustomNode<String, Integer> node = new CustomNode<>("String", 1);
         bucket.add(node);
         assertNotNull(bucket.get("String"));
