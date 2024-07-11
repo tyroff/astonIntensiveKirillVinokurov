@@ -12,16 +12,27 @@ public class CustomBucket <K,V> {
     }
 
     public void add(CustomNode<K,V> cn) {
-        if (!isContainKey(cn.getKey())) {
-            list.add(cn);
-        } else  {
-            throw new KeyAlreadyExistsException("Key " + cn.getKey() + " already exists into bucket!");
+        if (cn.getKey() == null) {
+            if (list.isEmpty()) {
+                list.add(cn);
+            } else {
+                System.out.println("Key null already exists into bucket!");
+            }
+        } else {
+            if (!isContainKey(cn.getKey())) {
+                list.add(cn);
+            } else  {
+                System.out.println("Key " + cn.getKey() + " already exists into bucket!");
+            }
         }
     }
 
     public V get(K key) {
+        if(key == null) {
+            return list.get(0).getValue();
+        }
         for (CustomNode<K,V> cn : list) {
-            if (cn.getKey() == key) {
+            if (cn.getKey().hashCode() == key.hashCode()) {
                 return cn.getValue();
             }
         }
