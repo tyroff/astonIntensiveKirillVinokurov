@@ -1,5 +1,6 @@
 package hw1_customHashMap;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class CustomBucket <K,V> {
         if (!isContainKey(cn.getKey())) {
             list.add(cn);
         } else  {
-            System.out.println("Already exists key: " + cn.getKey());
+            throw new KeyAlreadyExistsException("Key " + cn.getKey() + " already exists into bucket!");
         }
     }
 
