@@ -5,31 +5,48 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 
+/**
+ * A custom HashMap data structure that stores elements in a key-value format.
+ * The key is the unique number of the element, and the value is the content of the element.
+ * For each key, custom HashMap creates its own hash.
+ * The key and value can be any object or null.
+ * @param <K> key object type
+ * @param <V> value object type
+ */
 public class CustomHashMap <K,V> {
-
     private int capacity;
     private final int DEFAULT_CAPACITY = 16;
     private final int MAXIMUM_CAPACITY = 1073741824;
     transient List<CustomBucket<K,V>> table;
 
+    /**
+     * Default constructor. In which the list of buckets is initialized and filled with null.
+     * The default Bucket table size is assigned = 16.
+     */
     public CustomHashMap(){
         capacity = DEFAULT_CAPACITY;
         table = new ArrayList<>();
         createNullTable();
     };
 
+    /**
+     * Designer with sheet size capacity. It must be greater than the default value and less than the maximum value.
+     * In which the list of buckets is initialized and filled with null.
+     */
     public CustomHashMap(int capacity) {
-        if (capacity < 0) {
+        if (capacity < DEFAULT_CAPACITY) {
             throw new IllegalArgumentException("Illegal initial capacity: " + capacity);
         }
-        if (capacity > MAXIMUM_CAPACITY) {
-            this.capacity = MAXIMUM_CAPACITY;
-        }
-        this.capacity = capacity;
+        this.capacity = Math.min(capacity, MAXIMUM_CAPACITY);
         table = new ArrayList<>();
         createNullTable();
     }
 
+    /**
+     * Based on the hash value of the key, the Bucket number is calculated.
+     * @param key key value.
+     * @return bucket index.
+     */
     private int hash(K key) {
         if(key == null) {
             return 0;
@@ -53,7 +70,11 @@ public class CustomHashMap <K,V> {
         }
     }
 
-
+    /**
+     * Gets the Node value from the key value.
+     * @param key key value of {@link CustomNode}.
+     * @return the {@link CustomNode} value or null.
+     */
     public V get(K key) {
         if (key == null) {
             return table.get(0).get(null);
@@ -61,6 +82,11 @@ public class CustomHashMap <K,V> {
         return table.get(hash(key)).get(key);
     }
 
+    /**
+     * Places a Node with the given key and value. If this key is not in the Bucket being added, it adds it, otherwise it does nothing.
+     * @param key key value of {@link CustomNode}.
+     * @param value value of {@link CustomNode}.
+     */
     public void put(K key,V value) {
         CustomBucket<K,V> bucket;
         if (key != null) {
@@ -83,10 +109,17 @@ public class CustomHashMap <K,V> {
         }
     }
 
+    /**
+     * Deletes a {@link CustomNode} by key and value.
+     * @param key key value of {@link CustomNode}.
+     */
     public void remove(K key) {
         table.get(hash(key)).delete(key);
     }
 
+    /**
+     * Fills the new Lise with null.
+     */
     private void createNullTable() {
         for(int i = 0; i <= capacity-1; i++) {
             table.add(null);
